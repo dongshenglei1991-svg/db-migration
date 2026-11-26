@@ -1,0 +1,7 @@
+com.github.mengweijin.liquibase.oscar.snapshot.OscarColumnSnapshotGenerator
+com.github.mengweijin.liquibase.oscar.snapshot.OscarTableSnapshotGenerator
+com.github.mengweijin.liquibase.oscar.snapshot.OscarViewSnapshotGenerator
+com.github.mengweijin.liquibase.oscar.snapshot.OscarUniqueConstraintSnapshotGenerator
+com.github.mengweijin.liquibase.oscar.snapshot.OscarPrimaryKeySnapshotGenerator
+com.github.mengweijin.liquibase.oscar.snapshot.OscarForeignKeySnapshotGenerator
+com.github.mengweijin.liquibase.oscar.snapshot.OscarIndexSnapshotGenerator

@@ -30,17 +30,18 @@
 </p>
 
 <p align="center">
-    Flyway、Liquibase 扩展支持达梦（DM）、南大通用（GBase 8s）、OpenGauss 等国产数据库。
+    Flyway、Liquibase 扩展支持达梦（DM）、南大通用（GBase 8s）、神舟通用（神通 OSCAR）、OpenGauss 等国产数据库。
 </p>
 
 ## 数据库支持说明
 
-|                   数据库 | Flyway | Liquibase | 备注                                                                              |
+|                     数据库 | Flyway | Liquibase | 备注                                                                              |
 |-------------------------:|:------:|:---------:|:----------------------------------------------------------------------------------|
-|         **达梦（DM 8）** |   ✅   |    ✅     |                                                                                   |
-| **南大通用（GBase 8s）** |   ✅   |    ✅     |                                                                                   |
-|    **高斯（OpenGauss）** |   ✅   |    ❄️     | ❄️ 和 db-migration 无关，直接使用 PostgreSQL 即可。<br>写在这里避免有人混淆提问。 |
-| **人大金仓（Kingbase）** |   ❄️   |    ❄️     | ❄️ 和 db-migration 无关，直接使用 PostgreSQL 即可。<br>写在这里避免有人混淆提问。 |
+|           **达梦（DM 8）** |   ✅   |    ✅     |                                                                                   |
+|   **南大通用（GBase 8s）** |   ✅   |    ✅     |                                                                                   |
+| **神舟通用（神通 OSCAR）** |   ✅   |    ✅     | 基于 OSCAR 7.0.8（Oracle 兼容模式）实测。神通的 openGauss 内核版本请直接使用 PostgreSQL。 |
+|      **高斯（OpenGauss）** |   ✅   |    ❄️     | ❄️ 和 db-migration 无关，直接使用 PostgreSQL 即可。<br>写在这里避免有人混淆提问。 |
+|     **人大金仓（Kingbase）** |   ❄️   |    ❄️     | ❄️ 和 db-migration 无关，直接使用 PostgreSQL 即可。<br>写在这里避免有人混淆提问。 |
 
 ## db-migration 版本说明
 
@@ -129,6 +130,29 @@
     <version>${db-migration.version}</version>
 </dependency>
 ```
+
+### 神舟通用 OSCAR + Flyway
+
+```xml
+<dependency>
+    <groupId>com.github.mengweijin</groupId>
+    <artifactId>db-migration-oscar-flyway</artifactId>
+    <version>${db-migration.version}</version>
+</dependency>
+```
+
+### 神舟通用 OSCAR + Liquibase
+
+```xml
+<dependency>
+    <groupId>com.github.mengweijin</groupId>
+    <artifactId>db-migration-oscar-liquibase</artifactId>
+    <version>${db-migration.version}</version>
+</dependency>
+```
+
+> 神通 JDBC 驱动（`oscarJDBC.jar` / `com.oscar.Driver`）不在 Maven Central，请自行引入：
+> `mvn install:install-file -Dfile=oscarJDBC8.jar -DgroupId=com.shentongdata -DartifactId=oscarJDBC8 -Dversion=7.20 -Dpackaging=jar`
 
 ## 使用文档
 

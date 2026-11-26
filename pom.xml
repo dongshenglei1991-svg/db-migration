@@ -16,6 +16,8 @@
     <module>./db-migration-gauss-flyway</module>
     <module>./db-migration-gbase8s-flyway</module>
     <module>./db-migration-gbase8s-liquibase</module>
+    <module>./db-migration-oscar-flyway</module>
+    <module>./db-migration-oscar-liquibase</module>
 <!--    <module>./issue/gitee-IKW27O</module>-->
 <!--    <module>./issue/gitee-IKW27O-springboot4</module>-->
   </modules>

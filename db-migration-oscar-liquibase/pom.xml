@@ -1,0 +1,108 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.github.mengweijin</groupId>
+    <artifactId>db-migration-parent</artifactId>
+    <version>${revision}</version>
+  </parent>
+
+  <artifactId>db-migration-oscar-liquibase</artifactId>
+  <packaging>jar</packaging>
+  <name>${project.artifactId}</name>
+  <description>Liquibase 扩展支持神舟通用（神通 OSCAR）数据库。</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.basepom.maven</groupId>
+        <artifactId>duplicate-finder-maven-plugin</artifactId>
+        <version>${duplicate-finder-maven-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>no-liquibase-core-shadowing</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <checkCompileClasspath>true</checkCompileClasspath>
+              <checkRuntimeClasspath>true</checkRuntimeClasspath>
+              <checkTestClasspath>true</checkTestClasspath>
+              <failBuildInCaseOfConflict>true</failBuildInCaseOfConflict>
+              <failBuildInCaseOfDifferentContentConflict>true</failBuildInCaseOfDifferentContentConflict>
+              <failBuildInCaseOfEqualContentConflict>true</failBuildInCaseOfEqualContentConflict>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven-surefire-plugin.version}</version>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>oscar-integration</id>
+      <properties>
+        <oscar.jdbc.url>${env.OSCAR_JDBC_URL}</oscar.jdbc.url>
+        <oscar.jdbc.username>${env.OSCAR_JDBC_USERNAME}</oscar.jdbc.username>
+        <oscar.jdbc.password>${env.OSCAR_JDBC_PASSWORD}</oscar.jdbc.password>
+        <oscar.jdbc.schema>${env.OSCAR_JDBC_SCHEMA}</oscar.jdbc.schema>
+      </properties>
+      <dependencies>
+        <!-- 神通 JDBC 驱动不在 Maven Central，先安装到本地仓库：
+             mvn install:install-file -Dfile=D:/env/lib/oscarJDBC8.jar -DgroupId=com.shentongdata -DartifactId=oscarJDBC8 -Dversion=7.20 -Dpackaging=jar
+        -->
+        <dependency>
+          <groupId>com.shentongdata</groupId>
+          <artifactId>oscarJDBC8</artifactId>
+          <version>7.20</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-failsafe-plugin</artifactId>
+            <version>${maven-failsafe-plugin.version}</version>
+            <configuration>
+              <systemPropertyVariables>
+                <oscar.jdbc.url>${oscar.jdbc.url}</oscar.jdbc.url>
+                <oscar.jdbc.username>${oscar.jdbc.username}</oscar.jdbc.username>
+                <oscar.jdbc.password>${oscar.jdbc.password}</oscar.jdbc.password>
+                <oscar.jdbc.schema>${oscar.jdbc.schema}</oscar.jdbc.schema>
+              </systemPropertyVariables>
+            </configuration>
+            <executions>
+              <execution>
+                <phase>integration-test</phase>
+                <goals>
+                  <goal>integration-test</goal>
+                  <goal>verify</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>
